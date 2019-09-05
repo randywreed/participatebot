@@ -9,16 +9,16 @@ moodle_api.URL = "https://asulearn.appstate.edu/"
 #moodle_api.KEY = "72b2eecff7aa722a812268a906d228e1"
 moodle_api.KEY='173b03e93d507cab8cba5a142fb8ca65'
 
-db=MySQLdb.connect(host='127.0.0.1', #CHANGE BACK to db for docker
+db=MySQLdb.connect(host='localhost', #CHANGE BACK to db for docker
                     user='reedrw',
-                    passwd='calvin',
+                    passwd='1834calvin',
                     db='moodle')
 app=Flask(__name__)
-@app.route('/')
+@app.route('/flask/')
 def hello_world():
     return "Hello, World!"
 
-@app.route('/users')
+@app.route('/flask/users')
 def get_users():
     cur=db.cursor()
     cur.execute('select * from testable')
@@ -36,7 +36,7 @@ def get_users():
 
     return json.dumps(output)
 
-@app.route('/addstds')
+@app.route('/flask/addstds')
 def addstudents():
     cur=db.cursor()
     courseid=request.args.get('course')
@@ -51,7 +51,7 @@ def addstudents():
     cur.close()
     return "True"
 
-@app.route('/findstd')
+@app.route('/flask/findstd')
 def findstudent():
     cur=db.cursor()
     cur.execute("select count(*) from students;")
@@ -79,7 +79,7 @@ def findstudent():
         print(stdreq[0][0])
         return str(stdreq[0][0])
 
-@app.route('/findstdfull')
+@app.route('/flask/findstdfull')
 def findstdfull():
     cur=db.cursor()
     cur.execute("select count(*) from students;")
@@ -110,7 +110,7 @@ def findstdfull():
         print(json_data)
         return json.dumps(json_data)
 
-@app.route('/sqlrequest')
+@app.route('/flask/sqlrequest')
 def sqlrequest():
     sql=unquote(request.args.get('request'))
     #print(sql)
